@@ -7,8 +7,7 @@ import {
   Transfer,
 } from '../../generated/NFTPositionsManager/NFTPositionsManager';
 import { Position } from '../../generated/schema';
- 
- 
+import { FACTORY_ADDRESS, ZERO_BI, ONE_BI, ZERO_BD, ADDRESS_ZERO } from './../utils/constants'
 export function handleIncreaseLiquidity(event: IncreaseLiquidity): void {
   let entity = Position.load(event.params.tokenId.toHex());
   if (entity == null) {
@@ -18,17 +17,21 @@ export function handleIncreaseLiquidity(event: IncreaseLiquidity): void {
     entity.owner = event.transaction.from;
     entity.staked = false;
     entity.oldOwner = null;
+    entity.liquidity = ZERO_BI;
   }
-  entity.liquidity = event.params.liquidity;
+  entity.liquidity = entity.liquidity.plus(event.params.liquidity)
   entity.save();
 }
 
+
 export function handleDecreaseLiquidity(event: DecreaseLiquidity): void {
-  let entity = Position.load(event.params.tokenId.toHex());
-  if (entity != null) {
-    entity.liquidity = event.params.liquidity;
-    entity.save();
+  let entity =  Position.load(event.params.tokenId.toHex());
+  // position was not able to be fetched
+  if (entity == null) {
+    return
   }
+  entity.liquidity = entity.liquidity.minus(event.params.liquidity);
+  entity.save();
 }
 
 export function handleTransfer(event: Transfer): void {
