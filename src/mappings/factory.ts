@@ -13,6 +13,10 @@ export function handlePoolCreated(event: PoolCreated): void {
   if (event.params.pool == Address.fromHexString('0xe0a81459f92ffab75884bf1a15588cf7d1fd2deb')) {
     return
   }
+  // temp fix Wazen 
+  if (event.block.number == BigInt.fromI32(7245555)) {
+    return
+  }
 
   // load factory
   let factory = Factory.load(FACTORY_ADDRESS)
