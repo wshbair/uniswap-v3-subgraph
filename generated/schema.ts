@@ -206,6 +206,23 @@ export class Position extends Entity {
       this.set("approved", Value.fromBytes(<Bytes>value));
     }
   }
+
+  get incentiveId(): Bytes | null {
+    let value = this.get("incentiveId");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set incentiveId(value: Bytes | null) {
+    if (!value) {
+      this.unset("incentiveId");
+    } else {
+      this.set("incentiveId", Value.fromBytes(<Bytes>value));
+    }
+  }
 }
 
 export class Factory extends Entity {

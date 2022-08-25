@@ -28,7 +28,7 @@ export function handleIncentiveCreated(event: IncentiveCreated): void {
   entity.endTime = event.params.endTime
   entity.reward = event.params.reward
   entity.save()
-  log.warning("INCENTIVEID: {} ::::::::: {}", ["HELPPPPPPPPP======>>>>>>>>>>", "nothing"]); 
+  //log.warning("INCENTIVEID: {} ::::::::: {}", ["HELPPPPPPPPP======>>>>>>>>>>", "nothing"]); 
 }
 
 export function handleIncentiveEnded(event: IncentiveEnded): void {
@@ -46,6 +46,7 @@ export function handleTokenStaked(event: TokenStaked): void {
   if (entity != null) {
     entity.staked = true;
     entity.liquidity = event.params.liquidity;
+    entity.incentiveId = event.params.incentiveId;
     entity.save();
   }
 }
@@ -54,6 +55,7 @@ export function handleTokenUnstaked(event: TokenUnstaked): void {
   let entity = Position.load(event.params.tokenId.toHex());
   if (entity != null) {
     entity.staked = false;
+    entity.incentiveId = null;
     entity.save();
   }
 }

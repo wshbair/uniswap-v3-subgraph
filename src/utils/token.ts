@@ -5,6 +5,7 @@ import { ERC20NameBytes } from '../../generated/UniswapV3Factory/ERC20NameBytes'
 import { StaticTokenDefinition } from './staticTokenDefinition'
 import { BigInt, Address, log } from '@graphprotocol/graph-ts'
 import { isNullEthValue } from '.'
+import { ZERO_BI } from './constants'
 // import { ONE_BD, ZERO_BD, ZERO_BI } from './constants'
 
 export function fetchTokenSymbol(tokenAddress: Address): string {
@@ -30,8 +31,8 @@ export function fetchTokenSymbol(tokenAddress: Address): string {
     }
   } else {
     symbolValue = symbolResult.value
-  }
 
+  }
   return symbolValue
 }
 
@@ -72,6 +73,19 @@ export function fetchTokenTotalSupply(tokenAddress: Address): BigInt {
   }
   return totalSupplyResult.value //BigInt.fromI32(totalSupplyValue as i32)
 }
+
+// export function fetchTokenTotalSupply(tokenAddress: Address): BigInt {
+//   let contract = ERC20.bind(tokenAddress)
+//   let totalSupplyValue = null
+//   let totalSupplyResult = contract.try_totalSupply()
+//   if (!totalSupplyResult.reverted) {
+//      return totalSupplyResult.value;
+//   }
+// else
+//   return BigInt.fromI32(0);
+// }
+
+
 
 export function fetchTokenDecimals(tokenAddress: Address): BigInt {
   let contract = ERC20.bind(tokenAddress)

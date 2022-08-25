@@ -17,6 +17,7 @@ type Position @entity {
   oldOwner: Bytes
   liquidity: BigInt!
   approved: Bytes
+  incentiveId: Bytes
 }
  
 type Factory @entity {
