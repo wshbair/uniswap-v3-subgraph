@@ -8,28 +8,15 @@ import { Pool as PoolTemplate } from '../../generated/templates';
 import { fetchTokenSymbol, fetchTokenName, fetchTokenTotalSupply, fetchTokenDecimals } from '../utils/token'
 import { log, BigInt, Address } from '@graphprotocol/graph-ts'
 
-  
+//mainnet pool 0x66d1b94f81fba13efbd5307db63dde8cc810ffdf  
 export function handlePoolCreated(event: PoolCreated): void {
  
   //Limit the index to vnx pools
   if (event.params.pool == Address.fromHexString('0x5d2c380480a6a99059354622b34b109d3a993a09') || 
       event.params.pool == Address.fromHexString('0xd8f0f3398bcb7b33ff7611e1fbb5a2b7fecb5aa6') ||
+      event.params.pool == Address.fromHexString('0x827c98dbc7b9c42e47f6cb09d0d30a148e07df33') ||
       event.params.pool == Address.fromHexString('0x5c2e8f48a05d8089de063d9b54254bd2da051c37')  ) {
     
- 
-
-  
-  // // temp fix by Wazen, the Pool make error
-  // if (event.params.pool == Address.fromHexString('0xe0a81459f92ffab75884bf1a15588cf7d1fd2deb')) {
-  //   return
-  // }
-  // // temp fix Wazen 
-  // if (event.block.number == BigInt.fromI32(7245555)) {
-  //   return
-  // }
-  
-
-
   // load factory
   let factory = Factory.load(FACTORY_ADDRESS)
   if (factory === null) {
